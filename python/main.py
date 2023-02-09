@@ -1,6 +1,6 @@
 '''
 to do:
-1. text to speech (tts)
+1. audio to text (att)
 	a. get audio file input
 	b. run it through whisper
 	c. save dict in pkl format
@@ -12,4 +12,6 @@ to do:
 	d. get closest score for each in sql table
 	e. return highest cat score
 '''
+from att import Audio_To_Text
 
+Audio_To_Text('epi_1221762_medium.mp4')
