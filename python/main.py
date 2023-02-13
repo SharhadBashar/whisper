@@ -12,6 +12,41 @@ to do:
 	d. get closest score for each in sql table
 	e. return highest cat score
 '''
+
+import sys
+import time
+
 from att import Audio_To_Text
 
-Audio_To_Text('epi_1221762_medium.mp4')
+if __name__ == '__main__':
+	try:
+		command = sys.argv[1].lower()
+	except IndexError:
+		print('No command found. Please type transcribe or t for transcribing, or categorize or c to get categories')
+		exit()
+
+	if (command == 'transcribe' or sys.argv[1] == 't'):
+		from att import Audio_To_Text
+		try:
+			audio_file = sys.argv[2]
+		except IndexError:
+			print('No audio file passed. Please pass an audio file to be transcribed')
+			exit()
+		start = time.time()
+		Audio_To_Text(audio_file)
+		print('Finished transcribing in {} s'.format(round(time.time() - start, 2)))
+
+	elif (command == 'categorize' or sys.argv[1] == 'c'):
+		from get_category import Get_Category
+		try:
+			text_file = sys.argv[2]
+		except IndexError:
+			print('No text file passed. Please pass a text file to get categories')
+			exit()
+		start = time.time()
+		Get_Category(text_file)
+		print('Finished getting categories in {} s'.format(round(time.time() - start, 2)))
+
+	else:
+		print('Command {} not understood. Please type transcribe or t for transcribing, or categorize or c to get categories'.format(command))
+

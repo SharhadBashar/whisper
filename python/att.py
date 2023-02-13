@@ -21,7 +21,7 @@ class Audio_To_Text:
 
 		start = time.time()
 		self.model = whisper.load_model(model_type)
-		text = self.transcribe(audio_file, self.audio_data_path, model = model)
+		text = self.transcribe(audio_file, self.audio_data_path, model = self.model)
 		print('{} took {} s'.format(audio_file, round(time.time() - start, 2)))
 
 		self.save_text(text, audio_file.split('.')[0] + '.pkl', self.text_data_path)
