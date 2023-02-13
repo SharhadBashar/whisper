@@ -13,12 +13,26 @@ to do:
 	e. return highest cat score
 '''
 
+import os
 import sys
 import time
 
-from att import Audio_To_Text
+def make_folders():
+	if (not os.path.isdir('../data')):
+		os.makedirs('../data')
+	if (not os.path.isdir('../data/audio')):
+		os.makedirs('../data/audio')
+	if (not os.path.isdir('../data/text')):
+		os.makedirs('../data/text')
+	if (not os.path.isdir('../data/category')):
+		os.makedirs('../data/category')
+
+def get_categories():
+	None
 
 if __name__ == '__main__':
+	make_folders()
+	get_categories()
 	try:
 		command = sys.argv[1].lower()
 	except IndexError:
