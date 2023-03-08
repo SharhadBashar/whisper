@@ -19,14 +19,21 @@ class Get_Category:
 		self.category = 'ryan_category.pkl'
 		self.model_name = model_name if model_name else 'all-mpnet-base-v2'
 
-		category_list = pickle.load(open(os.path.join(self.category_path, self.category),'rb'))
-		text = self.clean_text(pickle.load(open(os.path.join(self.text_data_path, text_file),'rb')))
+		category_list = pickle.load(open(os.path.join(self.category_path, self.category), 'rb'))
+		self.get_custom_stopwords()
+		text = self.clean_text(pickle.load(open(os.path.join(self.text_data_path, text_file), 'rb')))
 
 		recurring_n_words = self.get_recurring_n(text, n = 5)
 		mapping = self.score_mapping(recurring_n_words, category_list, self.model_name)
 		self.save_mapping(mapping, text_file, self.category_path)
 
+	def get_custom_stopwords(self):
+	    with open('stop_words.pkl', 'rb') as file:
+	        self.custom_stopwords = pickle.load(file)
+	    file.close()
+
 	def clean_text(self, text_dict):
+		stop = stopwords.words('english')
 		lemmatizer = WordNetLemmatizer()
 		text = text_dict['text'].replace('[^A-Za-z0-9 ]+', ' ')
 		text = clean(text, clean_all = False, 
@@ -37,6 +44,8 @@ class Get_Category:
 						   numbers = True, 
 						   punct = True
 					)
+		text = ' '.join([word for word in text.split() if word not in (stop)])
+		text = ' '.join([word for word in text.split() if word not in (self.custom_stopwords)])
 		text = ' '.join([lemmatizer.lemmatize(word) for word in text.split()])
 		return text
 
@@ -67,6 +76,8 @@ class Get_Category:
 		return mapping
 
 	def save_mapping(self, mapping, mapping_file, category_path):
+		print('Categories:')
+		pprint(mapping)
 		with open(os.path.join(category_path, mapping_file), 'wb') as file: 
 			pickle.dump(mapping, file) 
 		print('Category mapping saved at:', os.path.join(category_path, mapping_file))
