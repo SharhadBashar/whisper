@@ -24,6 +24,8 @@ class Get_Category:
 		text = self.clean_text(pickle.load(open(os.path.join(self.text_data_path, text_file), 'rb')))
 
 		recurring_n_words = self.get_recurring_n(text, n = 5)
+		print('Top 5 words:')
+		pprint(recurring_n_words)
 		mapping = self.score_mapping(recurring_n_words, category_list, self.model_name)
 		self.save_mapping(mapping, text_file, self.category_path)
 

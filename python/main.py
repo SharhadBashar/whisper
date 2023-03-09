@@ -36,10 +36,10 @@ if __name__ == '__main__':
 	try:
 		command = sys.argv[1].lower()
 	except IndexError:
-		print('No command found. Please type transcribe or t for transcribing, or categorize or c to get categories')
+		print('No command found. Please type transcribe or -t for transcribing, or categorize or -c to get categories')
 		exit()
 
-	if (command == 'transcribe' or sys.argv[1] == 't'):
+	if (command == 'transcribe' or sys.argv[1] == '-t'):
 		from att import Audio_To_Text
 		try:
 			audio_file = sys.argv[2]
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 		Audio_To_Text(audio_file)
 		print('Finished transcribing in {} s'.format(round(time.time() - start, 2)))
 
-	elif (command == 'categorize' or sys.argv[1] == 'c'):
+	elif (command == 'categorize' or sys.argv[1] == '-c'):
 		from get_category import Get_Category
 		try:
 			text_file = sys.argv[2]
