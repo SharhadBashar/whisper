@@ -48,6 +48,8 @@ class Get_Category:
 					)
 		text = ' '.join([word for word in text.split() if word not in (stop)])
 		text = ' '.join([word for word in text.split() if word not in (self.custom_stopwords)])
+		print(text)
+		input()
 		text = ' '.join([lemmatizer.lemmatize(word) for word in text.split()])
 		return text
 
